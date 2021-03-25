@@ -28,11 +28,23 @@ class UserService {
         }
     }
 
-    async findAllUsers() {
+    async findAllUsers(req) {
         try {
-            const users = await User.find();
-            if(users) {
-                return users;
+            const length = await User.find().countDocuments();
+            const currentPage = parseInt(req.query.page) || process.env.DEFAULT_PAGE;
+            const itemsPerPage = parseInt(req.query.limit) || process.env.DEFAULT_LIMIT;
+            const offset = (currentPage - 1) * itemsPerPage;
+
+            const data = await User.find().limit(itemsPerPage).skip(offset);
+            console.log(data);
+            if(data) {
+                const response = {
+                    items: data.length ? data : [],
+                    currentPage: currentPage,
+                    itemsPerPage: itemsPerPage,
+                    totalItems: length,
+                };
+                return response;
             }
         } catch (e) {
             return { message: e.message };
