@@ -1,5 +1,7 @@
 const User = require('../models/user-schema')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+require("dotenv/config");
 
 class UserService {
 
@@ -7,8 +9,8 @@ class UserService {
         return await bcrypt.hash(password, 10)
     }
 
-
     async createUser(req) {
+        console.log('eeeee')
         try {
             const isMatch = await User.findOne({ email: req.body.email })
             if(isMatch) {
@@ -70,6 +72,19 @@ class UserService {
         } catch (e) {
             return { message: 'Something went wrong' };
         }
+    }
+
+    async login(req) {
+        const userToLogin = await User.findOne({email: req.body.email});
+        if(!userToLogin) {
+            return { message: 'Such user does not exist' }
+        }
+        const token = jwt.sign(
+            {data: userToLogin},
+            process.env.JWT_SECRET,
+            {expiresIn: '24h'}
+        );
+        return {token};
     }
 
 
