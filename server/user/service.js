@@ -11,7 +11,6 @@ class UserService {
             if(isMatch) {
                 return { message: 'This email already exists' }
             }
-            // const hashedPassword = await this.hashed(req.body.password);
             const hashedPassword = await helpers.hashed(req.body.password)
             const newUser = new User({
                 name: req.body.name,
