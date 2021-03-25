@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const userService = require('./service');
-const { check, validationResult } = require('express-validator')
+const { check, validationResult } = require('express-validator');
+const isAuthorized = require('../middleware/auth.middleware.js')
 
 
 router.post('/register',
@@ -32,7 +33,7 @@ router.post('/login',
         res.json(data);
     })
 
-router.get('/', async (req, res) => {
+router.get('/', isAuthorized, async (req, res) => {
     const data = await userService.findAllUsers(req);
     res.json(data);
 })

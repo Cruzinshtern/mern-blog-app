@@ -10,7 +10,6 @@ class UserService {
     }
 
     async createUser(req) {
-        console.log('eeeee')
         try {
             const isMatch = await User.findOne({ email: req.body.email })
             if(isMatch) {
@@ -61,8 +60,8 @@ class UserService {
         try {
             const hashedPassword = await this.hashed(req.body.password);
             await User.updateOne(
-                {_id: req.params.id},
-                {$set: {
+                { _id: req.params.id },
+                { $set: {
                     name: req.body.name,
                     username: req.body.username,
                     password: hashedPassword,
@@ -75,14 +74,14 @@ class UserService {
     }
 
     async login(req) {
-        const userToLogin = await User.findOne({email: req.body.email});
+        const userToLogin = await User.findOne({ email: req.body.email });
         if(!userToLogin) {
             return { message: 'Such user does not exist' }
         }
         const token = jwt.sign(
-            {data: userToLogin},
+            { data: userToLogin },
             process.env.JWT_SECRET,
-            {expiresIn: '24h'}
+            { expiresIn: '24h' }
         );
         return {token};
     }
@@ -90,5 +89,4 @@ class UserService {
 
 
 }
-
 module.exports = new UserService;
