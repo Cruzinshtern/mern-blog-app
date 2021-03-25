@@ -1,4 +1,4 @@
-const User = require('../models/user-schema')
+const User = require('../models/User')
 const jwt = require('jsonwebtoken');
 const helpers = require('../helpers/helpers.js')
 require("dotenv/config");
