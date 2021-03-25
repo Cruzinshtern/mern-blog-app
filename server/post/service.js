@@ -23,11 +23,24 @@ class PostService {
     }
 
     async findAllPosts(req) {
+        const postTitlesToFind = req.query.title;
+        const sortByTitle = req.query.sort;
         try {
             const length = await Post.find().countDocuments();
-            const paginate = helpers.paginate(req)
-            const data = await Post.find().limit(paginate.itemsPerPage).skip(paginate.offset);
-            if(data) {
+            const paginate = helpers.paginate(req);
+            if (!postTitlesToFind) {
+                const data = await Post.find().limit(paginate.itemsPerPage).skip(paginate.offset).sort({ title: sortByTitle });
+                if (data) {
+                    const response = {
+                        items: data.length ? data : [],
+                        currentPage: paginate.currentPage,
+                        itemsPerPage: paginate.itemsPerPage,
+                        totalItems: length,
+                    };
+                    return response;
+                }
+            } else {
+                const data = await Post.find({ title: { $regex: postTitlesToFind } }).limit(paginate.itemsPerPage).skip(paginate.offset).sort({ title: sortByTitle });
                 const response = {
                     items: data.length ? data : [],
                     currentPage: paginate.currentPage,
@@ -37,7 +50,7 @@ class PostService {
                 return response;
             }
         } catch (e) {
-            return { message: e.message };
+            return {message: e.message};
         }
     }
 

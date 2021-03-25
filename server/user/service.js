@@ -25,11 +25,25 @@ class UserService {
     }
 
     async findAllUsers(req) {
+        const usernameToFind = req.query.username;
+        const sortByUsername = req.query.sort;
         try {
             const length = await User.find().countDocuments();
-            const paginate = helpers.paginate(req)
-            const data = await User.find().limit(paginate.itemsPerPage).skip(paginate.offset);
-            if(data) {
+            const paginate = helpers.paginate(req);
+            if (!usernameToFind) {
+                const data = await User.find().limit(paginate.itemsPerPage).skip(paginate.offset).sort({ username: sortByUsername })
+                if (data) {
+                    const response = {
+                        items: data.length ? data : [],
+                        currentPage: paginate.currentPage,
+                        itemsPerPage: paginate.itemsPerPage,
+                        totalItems: length,
+                    };
+                    console.log(req.query);
+                    return response;
+                }
+            } else {
+                const data = await User.find({ username: { $regex: usernameToFind } }).limit(paginate.itemsPerPage).skip(paginate.offset).sort({ username: sortByUsername })
                 const response = {
                     items: data.length ? data : [],
                     currentPage: paginate.currentPage,
@@ -39,7 +53,7 @@ class UserService {
                 return response;
             }
         } catch (e) {
-            return { message: e.message };
+            return {message: e.message};
         }
     }
 
