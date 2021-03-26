@@ -36,6 +36,7 @@ class PostService {
                         currentPage: paginate.currentPage,
                         itemsPerPage: paginate.itemsPerPage,
                         totalItems: length,
+                        totalPages: Math.ceil(length / paginate.itemsPerPage),
                     };
                     return response;
                 }
@@ -46,6 +47,7 @@ class PostService {
                     currentPage: paginate.currentPage,
                     itemsPerPage: paginate.itemsPerPage,
                     totalItems: length,
+                    totalPages: Math.ceil(length / paginate.itemsPerPage),
                 };
                 return response;
             }
