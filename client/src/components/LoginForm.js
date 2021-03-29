@@ -1,7 +1,12 @@
-import { Auth } from "../services/auth";
+// import { Auth } from "../services/auth";
+
+import {useAuth} from "../hooks/useAuth.hook";
+import {useHistory} from "react-router";
 
 function LoginForm() {
+    const history = useHistory();
 
+    const {login} = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
         const loginForm = {
@@ -10,8 +15,10 @@ function LoginForm() {
             email: e.target.elements.email.value,
             password: e.target.elements.password.value,
         };
-        await Auth.login(loginForm);
+        // await Auth.login(loginForm);
+        await login(loginForm);
         e.target.reset();
+        history.push('/');
     }
 
     return (
@@ -42,7 +49,7 @@ function LoginForm() {
                     </div>
                 </div>
                 <div>
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Register
+                    <button className="btn waves-effect waves-light" type="submit" name="action">Login
                         <i className="material-icons right">send</i>
                     </button>
                     <button className="btn waves-effect waves-light" type="reset" name="action">Cancel</button>

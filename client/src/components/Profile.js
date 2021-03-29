@@ -1,12 +1,13 @@
 import {useDispatch, useSelector} from "react-redux";
 import {getOneUser} from "../actions/users";
-import {Auth} from "../services/auth";
 import {useEffect} from "react";
+import {useAuth} from "../hooks/useAuth.hook";
 
 
 function Profile () {
 
-    const userId = Auth.decodeTokenWithId();
+    const {decodeTokenWithId} = useAuth();
+    const userId = decodeTokenWithId();
     const user = useSelector((state => state.users))
     const dispatch = useDispatch();
 

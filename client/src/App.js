@@ -8,10 +8,13 @@ import NewPost from "./components/NewPost";
 import 'materialize-css';
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
-
-
+// import {useEffect, useState} from "react";
+import {useAuth} from "./hooks/useAuth.hook";
 
 function App() {
+
+    // const {isAuth} = useAuth();
+    // console.log(isAuth)
 
   return (
     <div>
