@@ -33,10 +33,12 @@ class PostService {
                 if (data) {
                     const response = {
                         items: data.length ? data : [],
-                        currentPage: paginate.currentPage,
-                        itemsPerPage: paginate.itemsPerPage,
-                        totalItems: length,
-                        totalPages: Math.ceil(length / paginate.itemsPerPage),
+                        meta: {
+                            currentPage: paginate.currentPage,
+                            itemsPerPage: paginate.itemsPerPage,
+                            totalItems: length,
+                            totalPages: Math.ceil(length / paginate.itemsPerPage),
+                        },
                     };
                     return response;
                 }
@@ -44,10 +46,12 @@ class PostService {
                 const data = await Post.find({ title: { $regex: postTitlesToFind } }).limit(paginate.itemsPerPage).skip(paginate.offset).sort({ title: sortByTitle });
                 const response = {
                     items: data.length ? data : [],
-                    currentPage: paginate.currentPage,
-                    itemsPerPage: paginate.itemsPerPage,
-                    totalItems: length,
-                    totalPages: Math.ceil(length / paginate.itemsPerPage),
+                    meta: {
+                        currentPage: paginate.currentPage,
+                        itemsPerPage: paginate.itemsPerPage,
+                        totalItems: length,
+                        totalPages: Math.ceil(length / paginate.itemsPerPage),
+                    },
                 };
                 return response;
             }

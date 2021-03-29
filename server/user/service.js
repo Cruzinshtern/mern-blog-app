@@ -35,10 +35,12 @@ class UserService {
                 if (data) {
                     const response = {
                         items: data.length ? data : [],
-                        currentPage: paginate.currentPage,
-                        itemsPerPage: paginate.itemsPerPage,
-                        totalItems: length,
-                        totalPages: Math.ceil(length / paginate.itemsPerPage),
+                        meta: {
+                            currentPage: paginate.currentPage,
+                            itemsPerPage: paginate.itemsPerPage,
+                            totalItems: length,
+                            totalPages: Math.ceil(length / paginate.itemsPerPage),
+                        },
                     };
                     console.log(req.query);
                     return response;
@@ -47,10 +49,12 @@ class UserService {
                 const data = await User.find({ username: { $regex: usernameToFind } }).limit(paginate.itemsPerPage).skip(paginate.offset).sort({ username: sortByUsername })
                 const response = {
                     items: data.length ? data : [],
-                    currentPage: paginate.currentPage,
-                    itemsPerPage: paginate.itemsPerPage,
-                    totalItems: length,
-                    totalPages: Math.ceil(length / paginate.itemsPerPage),
+                    meta: {
+                        currentPage: paginate.currentPage,
+                        itemsPerPage: paginate.itemsPerPage,
+                        totalItems: length,
+                        totalPages: Math.ceil(length / paginate.itemsPerPage),
+                    },
                 };
                 return response;
             }

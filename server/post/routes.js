@@ -7,8 +7,8 @@ router.post('/',async (req, res) => {
         const data = await postService.createPost(req);
         res.json(data);
     })
-
-router.get('/', isAuthorized, async (req, res) => {
+//add isAuthorized here
+router.get('/', async (req, res) => {
     const data = await postService.findAllPosts(req);
     res.json(data);
 })

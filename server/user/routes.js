@@ -33,7 +33,8 @@ router.post('/login',
         res.json(data);
     })
 
-router.get('/', isAuthorized, async (req, res) => {
+// add isAuthorized here
+router.get('/', async (req, res) => {
     const data = await userService.findAllUsers(req);
     res.json(data);
 })
