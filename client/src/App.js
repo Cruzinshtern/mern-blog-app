@@ -3,11 +3,12 @@ import Posts from "./components/Posts";
 import Navbar from "./components/Navbar";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Users from "./components/Users";
-import Test from "./components/Test";
+import Profile from "./components/Profile";
 import NewPost from "./components/NewPost";
 import 'materialize-css';
 import RegistrationForm from "./components/RegistrationForm";
 import LoginForm from "./components/LoginForm";
+
 
 
 function App() {
@@ -23,8 +24,8 @@ function App() {
                 <Route path='/posts'>
                     <Posts />
                 </Route>
-                <Route path='/test/:id'>
-                    <Test />
+                <Route path='/profile'>
+                    <Profile />
                 </Route>
                 <Route path='/new-post'>
                     <NewPost />

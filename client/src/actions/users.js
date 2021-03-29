@@ -18,3 +18,11 @@ export const registerUser = (user) => async (dispatch) => {
     }
 }
 
+export const getOneUser = (id) => async (dispatch) => {
+    try {
+        const { data } = await api.getOneUser(id);
+        dispatch({ type: 'GET_ONE', payload: data })
+    } catch (e) {
+        console.log(e.message)
+    }
+}

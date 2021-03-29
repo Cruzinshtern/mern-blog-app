@@ -10,3 +10,4 @@ export const createPost = (post) => axios.post(BASIC_POSTS_URL, post);
 export const getAllUsers = () => axios.get(BASIC_USERS_URL);
 export const registerUser = (user) => axios.post(BASIC_USERS_URL + '/register', user)
 export const loginUser = (user) => axios.post(BASIC_USERS_URL + '/login', user)
+export const getOneUser = (id) => axios.get(BASIC_USERS_URL + `/${id}`)
