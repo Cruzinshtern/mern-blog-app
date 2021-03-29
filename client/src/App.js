@@ -1,7 +1,4 @@
-import { useDispatch } from "react-redux";
 import './App.css';
-import { getAllPosts } from "./actions/posts";
-import { useEffect } from "react";
 import Posts from "./components/Posts";
 import Navbar from "./components/Navbar";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
@@ -9,15 +6,11 @@ import Users from "./components/Users";
 import Test from "./components/Test";
 import NewPost from "./components/NewPost";
 import 'materialize-css';
+import RegistrationForm from "./components/RegistrationForm";
+import LoginForm from "./components/LoginForm";
 
 
 function App() {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getAllPosts())
-  }, [dispatch]);
 
   return (
     <div>
@@ -35,6 +28,12 @@ function App() {
                 </Route>
                 <Route path='/new-post'>
                     <NewPost />
+                </Route>
+                <Route path='/registration'>
+                    <RegistrationForm />
+                </Route>
+                <Route path='/login'>
+                    <LoginForm />
                 </Route>
             </Switch>
         </Router>
